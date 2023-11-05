@@ -22,7 +22,7 @@ def add_banned_query(query: str):
 
 def delete_admin(admin: int | str):
     data = get_data()
-    if admin in data['admins']:
-        data['admins'].remove(admin)
+    if int(admin) in data['admins']:
+        data['admins'].remove(int(admin))
         return True
     return False

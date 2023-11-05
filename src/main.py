@@ -42,9 +42,9 @@ async def command_info_handler(message: Message):
     data = get_metrics(*DB_CRED)
     for line in data:
         # print(line)
-        mt = f"**datid**: {line['datid']}\n**datname**: {line['datname']}\n**usename**: {line['usename']}\n**application_name**: {line['application_name']}\n**client_addr**: {line['client_addr']}\n**client_hostname**: {line['client_hostname']}\n**client_port**: {line['client_port']}\n**backend_start**: {line['backend_start']}\n**xact_start**: {line['xact_start']}\n**query_start**: {line['query_start']}\n**state_change**: {line['state_change']}\n**wait_event_type**: {line['wait_event_type']}\n**wait_event**: {line['wait_event']}\n**state**: {line['state']}\n**backend_type**: {line['backend_type']}\n**query**: {line['query']}"
-        mt = mt.replace('-', '\-').replace('.', '\.').replace('+', '\+').replace('(', '\(').replace(')', '\)')
-        await message.answer(mt)
+        mt = f"datid: {line['datid']}\ndatname: {line['datname']}\nusename: {line['usename']}\napplication_name: {line['application_name']}\nclient_addr: {line['client_addr']}\nclient_hostname: {line['client_hostname']}\nclient_port: {line['client_port']}\nbackend_start: {line['backend_start']}\nxact_start: {line['xact_start']}\nquery_start: {line['query_start']}\nstate_change: {line['state_change']}\nwait_event_type: {line['wait_event_type']}\nwait_event: {line['wait_event']}\nstate: {line['state']}\nbackend_type: {line['backend_type']}\nquery: {line['query']}"
+        # mt = mt.replace('-', '\-').replace('.', '\.').replace('+', '\+').replace('(', '\(').replace(')', '\)')
+        await message.answer(mt, parse_mode='html')
 
 
 @dp.message(IsAdmin(get_data()['admins']), Command("admin", prefix='/'))
@@ -61,7 +61,7 @@ async def add_user_handler(message: Message):
 @dp.message(IsAdmin(get_data()['admins']), Command("delAdmin", prefix='/'))
 async def delete_admin_handler(message: Message):
     admin = message.text.split()[1]
-    if delete_admin(admin=admin):
+    if delete_admin(admin):
         await message.reply('Админ успешно удален✅')
         return
     await message.reply('Не удалось найти админа с указанным ID❌')
